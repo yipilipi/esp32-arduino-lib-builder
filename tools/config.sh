@@ -9,7 +9,7 @@ IDF_TOOLCHAIN_WIN32="https://dl.espressif.com/dl/xtensa-esp32-elf-win32-1.22.0-9
 IDF_TOOLCHAIN_MACOS="https://dl.espressif.com/dl/xtensa-esp32-elf-osx-1.22.0-96-g2852398-5.2.0.tar.gz"
 
 if [ -z $IDF_BRANCH ]; then
-	IDF_BRANCH="release/v3.3"
+	IDF_BRANCH="release/v3.3-solo1"
 fi
 
 # Owner of the target ESP32 Arduino repository
