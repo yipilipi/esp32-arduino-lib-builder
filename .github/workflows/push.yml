@@ -3,7 +3,7 @@ name: ESP32 Arduino Libs CI
 on:
   push:
     branches:
-    - master
+    - release/v3.3
   pull_request:
 
 jobs:
@@ -24,3 +24,22 @@ jobs:
       with:
         name: artifacts
         path: dist
+    - uses: actions/download-artifact@v2
+      with:
+        name: arduino_lib
+        path: ./arduino_lib
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./arduino_lib       
+    - name: Commit files  # transfer the builded files back into the repository
+      run: |
+        git config --local user.name "esp32-arduino-lib-builder"
+        git rm -r --cached .
+        git add -f ./arduino_lib/*.*
+        git commit -m "esp32-arduino-lib idf 3.3"
+    - name: Push changes  # push the firmware files to branch arduino-lib
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'esp32-arduino-lib-builder-IDF33'
+        force: true
