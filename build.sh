@@ -59,3 +59,4 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 # POST Build
 #./tools/copy-to-arduino.sh
+./tools/post-install.sh
