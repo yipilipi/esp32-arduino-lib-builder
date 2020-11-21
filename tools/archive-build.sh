@@ -6,7 +6,7 @@ IDF_BRANCH=$(git -C "$IDF_PATH" symbolic-ref --short HEAD)
 idf_version_string=${IDF_BRANCH//\//_}"-$IDF_COMMIT"
 archive_path="dist/arduino-esp32-libs-$idf_version_string.tar.gz"
 build_archive_path="dist/arduino-esp32-build-$idf_version_string.tar.gz"
-pio_archive_path="dist/framework-arduinoespressif32-$idf_version_string.tar.gz"
+pio_archive_path="dist/framework-arduinoespressif32.zip"
 
 mkdir -p dist && rm -rf "$archive_path" "$build_archive_path"
 if [ -d "out" ]; then
@@ -28,7 +28,8 @@ if [ -d "out" ]; then
     cp -Rf tools/sdk arduino-esp32/tools/sdk
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
     mv arduino-esp32/ framework-arduinoespressif32/
-    tar --exclude=.* -zcf ../$pio_archive_path framework-arduinoespressif32/
+    #tar --exclude=.* -zcf ../$pio_archive_path framework-arduinoespressif32/
+    zip -r $pio_archive_path xtensa-esp32-elf
     cd ..
 fi
 
