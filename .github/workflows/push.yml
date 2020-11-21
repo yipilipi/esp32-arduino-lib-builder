@@ -34,6 +34,7 @@ jobs:
     - name: Commit files  # transfer the builded files back into the repository
       run: |
         git config --local user.name "esp32-arduino-lib-builder"
+        rm -f *
         cd esp32-arduino
         cp -Rf ./* ../
         cd ..
