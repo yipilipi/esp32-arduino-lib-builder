@@ -35,7 +35,9 @@ jobs:
       run: |
         git config --local user.name "esp32-arduino-lib-builder"
         git rm -r --cached .
-        cp -Rf esp32-arduino .
+        cd esp32-arduino
+        cp -Rf ./* ../
+        cd ..
         rm -rf esp32-arduino
         git add -f *.*
         git commit -m "esp32-arduino"
