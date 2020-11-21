@@ -21,7 +21,7 @@ if [ -d "out" ]; then
     echo "Creating framework-arduinoespressif32"
     AR_BRANCH_SUFFIX="idf-$IDF_BRANCH"
     echo "$AR_BRANCH_SUFFIX"
-    AR_BRANCH_SUFFIX=${AR_BRANCH_SUFFIX%"$-solo1"}
+    AR_BRANCH_SUFFIX=${AR_BRANCH_SUFFIX%"-solo1"}
     echo "$AR_BRANCH_SUFFIX"
     git clone https://github.com/tasmota/arduino-esp32 -b $AR_BRANCH_SUFFIX
     rm -rf arduino-esp32/tools/sdk
