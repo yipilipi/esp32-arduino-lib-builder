@@ -29,7 +29,7 @@ if [ -d "out" ]; then
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
     mv arduino-esp32/ framework-arduinoespressif32/
     #tar --exclude=.* -zcf ../$pio_archive_path framework-arduinoespressif32/
-    zip -r $pio_archive_path xtensa-esp32-elf
+    zip -r $pio_archive_path framework-arduinoespressif32
     cd ..
 fi
 
