@@ -28,7 +28,9 @@ jobs:
       run: |
         rm -rf *
         git config --local user.name "esp32-arduino-lib-builder"
-        git checkout esp32-arduino-lib-builder 
+        git checkout esp32-arduino-lib-builder
+    - name: Display files from branch ckeckout
+      run: ls -R
     - uses: actions/download-artifact@v2
       with:
         name: esp32-arduino
