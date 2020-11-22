@@ -28,8 +28,7 @@ jobs:
       run: |
         rm -rf *
         git config --local user.name "esp32-arduino-lib-builder"
-        git checkout -b esp32-arduino-lib-builder origin/esp32-arduino-lib-builder
-        git merge esp32-arduino-lib-builder/esp32-arduino-lib-builder --allow-unrelated-histories 
+        git checkout esp32-arduino-lib-builder 
     - uses: actions/download-artifact@v2
       with:
         name: esp32-arduino
