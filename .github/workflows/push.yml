@@ -28,7 +28,7 @@ jobs:
       run: |
         rm -rf *
         git config --local user.name "esp32-arduino-lib-builder"
-        git remote add -f esp32-arduino-lib-builder "github.com/Jason2866/esp32-arduino-lib-builder.git"
+        git remote add -f esp32-arduino-lib-builder "https://github.com/Jason2866/esp32-arduino-lib-builder.git"
         git checkout esp32-arduino-lib-builder
     - uses: actions/download-artifact@v2
       with:
