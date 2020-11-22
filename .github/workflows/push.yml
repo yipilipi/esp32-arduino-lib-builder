@@ -25,7 +25,10 @@ jobs:
         name: esp32-arduino
         path: dist
     - name: Delete all files and folders
-      run: rm -rf * 
+      run: |
+        rm -rf *
+        git config --local user.name "esp32-arduino-lib-builder"
+        git remote add -f esp32-arduino-lib-builder "github.com/Jason2866/esp32-arduino-lib-builder.git" -b esp32-arduino-lib-builder
     - uses: actions/download-artifact@v2
       with:
         name: esp32-arduino
@@ -35,7 +38,6 @@ jobs:
       working-directory: ./esp32-arduino       
     - name: Commit files  # transfer the builded files back into the repository
       run: |
-        git config --local user.name "esp32-arduino-lib-builder"
         cd esp32-arduino
         cp -Rf ./* ../
         cd ..
