@@ -28,7 +28,7 @@ jobs:
       run: |
         rm -rf *
         git config --local user.name "esp32-arduino-lib-builder"
-        git checkout esp32-arduino-lib-builder
+        git checkout framework-arduinoespressif32
     - name: Display files from branch ckeckout
       run: ls -R
     - uses: actions/download-artifact@v2
@@ -51,5 +51,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: 'esp32-arduino-lib-builder'
+        branch: 'framework-arduinoespressif32'
         force: true
