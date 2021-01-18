@@ -4,6 +4,9 @@ IDF_COMMIT=$(git -C "$IDF_PATH" rev-parse --short HEAD)
 IDF_BRANCH=$(git -C "$IDF_PATH" symbolic-ref --short HEAD)
 
 idf_version_string=${IDF_BRANCH//\//_}"-$IDF_COMMIT"
+echo "$idf_version_string"
+idf_version_string=${idf_version_string%"-solo1"}
+echo "$idf_version_string"
 archive_path="dist/arduino-esp32-libs-$idf_version_string.tar.gz"
 build_archive_path="dist/arduino-esp32-build-$idf_version_string.tar.gz"
 pio_archive_path="dist/framework-arduinoespressif32-$idf_version_string.tar.gz"
@@ -21,9 +24,9 @@ if [ -d "out" ]; then
     echo "Creating framework-arduinoespressif32"
     AR_BRANCH_SUFFIX="idf-$IDF_BRANCH"
     echo "$AR_BRANCH_SUFFIX"
-    AR_BRANCH_SUFFIX=${AR_BRANCH_SUFFIX%"-solo1"}
-    echo "$AR_BRANCH_SUFFIX"
-    git clone https://github.com/tasmota/arduino-esp32 -b $AR_BRANCH_SUFFIX
+    #AR_BRANCH_SUFFIX=${AR_BRANCH_SUFFIX%"-solo1"}
+    #echo "$AR_BRANCH_SUFFIX"
+    git clone https://github.com/espressif/arduino-esp32 -b $AR_BRANCH_SUFFIX
     rm -rf arduino-esp32/tools/sdk
     rm -rf arduino-esp32/docs
     cp -Rf tools/sdk arduino-esp32/tools/sdk
