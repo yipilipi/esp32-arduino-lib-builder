@@ -29,9 +29,9 @@ if [ -d "out" ]; then
     #git clone https://github.com/espressif/arduino-esp32 -b $AR_BRANCH_SUFFIX
     git clone https://github.com/espressif/arduino-esp32 -b master
     # use specific commit (=release 1.0.5). Changes after did broke stuff. https://github.com/espressif/arduino-esp32/issues/4920
-    cd arduino-esp32
-    git reset --hard 419ba324
-    cd ..
+    #cd arduino-esp32
+    #git reset --hard 419ba324
+    #cd ..
     rm -rf arduino-esp32/tools/sdk
     rm -rf arduino-esp32/docs
     cp -Rf tools/sdk arduino-esp32/tools/sdk
