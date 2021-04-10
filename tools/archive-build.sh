@@ -22,16 +22,7 @@ mkdir -p dist && rm -rf "$archive_path" "$build_archive_path"
 if [ -d "out" ]; then
     cd out
     echo "Creating framework-arduinoespressif32"
-    AR_BRANCH_SUFFIX="idf-$IDF_BRANCH"
-    echo "$AR_BRANCH_SUFFIX"
-    #AR_BRANCH_SUFFIX=${AR_BRANCH_SUFFIX%"-solo1"}
-    #echo "$AR_BRANCH_SUFFIX"
-    #git clone https://github.com/espressif/arduino-esp32 -b $AR_BRANCH_SUFFIX
     git clone https://github.com/espressif/arduino-esp32 -b idf-release/v3.3
-    # use specific commit (=release 1.0.5). Changes after did broke stuff. https://github.com/espressif/arduino-esp32/issues/4920
-    #cd arduino-esp32
-    #git reset --hard 419ba324
-    #cd ..
     rm -rf arduino-esp32/tools/sdk
     rm -rf arduino-esp32/docs
     cp -Rf tools/sdk arduino-esp32/tools/sdk
