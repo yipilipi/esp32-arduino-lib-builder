@@ -1,4 +1,4 @@
-name: ESP32 Arduino Libs CI
+name: ESP32 Arduino
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
         rm -rf esp32-arduino
         git rm -r --cached .
         git add -f *.*
-        git commit -m "esp32-arduino"
+        git commit -m "esp32-arduino lib v4.4"
     - name: Push changes  # push the files to branch framework-arduinoespressif32
       uses: ad-m/github-push-action@master
       with:
