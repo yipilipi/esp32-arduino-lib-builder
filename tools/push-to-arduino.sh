@@ -20,12 +20,7 @@ if [ $AR_HAS_COMMIT == "0" ]; then
 
 	# make changes to the files
 	echo "Patching files in branch '$AR_NEW_BRANCH_NAME'..."
-	rm -rf $AR_COMPS/arduino/tools/sdk
-	cp -Rf $AR_SDK $AR_COMPS/arduino/tools/sdk
-	cp -f $AR_ESPTOOL_PY $AR_COMPS/arduino/tools/esptool.py
-	cp -f $AR_GEN_PART_PY $AR_COMPS/arduino/tools/gen_esp32part.py
-	cp -f $AR_PLATFORMIO_PY $AR_COMPS/arduino/tools/platformio-build.py
-	cp -f $AR_PLATFORM_TXT $AR_COMPS/arduino/platform.txt
+	ESP32_ARDUINO="$AR_COMPS/arduino" ./tools/copy-to-arduino.sh
 
 	# did any of the files change?
 	if [ -n "$(git status --porcelain)" ]; then
@@ -50,7 +45,7 @@ fi
 #
 
 if [ "$AR_HAS_PR" == "0" ]; then
-	pr_created=`git_create_pr "$AR_NEW_BRANCH_NAME" "$AR_NEW_PR_TITLE"`
+	pr_created=`git_create_pr "$AR_NEW_BRANCH_NAME" "$AR_NEW_PR_TITLE" "$AR_PR_TARGET_BRANCH"`
 	if [ $pr_created == "0" ]; then
 		echo "ERROR: Failed to create PR '$AR_NEW_PR_TITLE': "`echo "$git_create_pr_res" | jq -r '.message'`": "`echo "$git_create_pr_res" | jq -r '.errors[].message'`
 		exit 1
