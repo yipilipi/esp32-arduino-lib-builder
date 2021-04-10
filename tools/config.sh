@@ -1,16 +1,27 @@
 #!/bin/bash
 
 IDF_COMPS="$IDF_PATH/components"
-IDF_TOOLCHAIN="xtensa-esp32-elf"
-IDF_TOOLCHAIN_LINUX_ARMEL="https://dl.espressif.com/dl/xtensa-esp32-elf-linux-armel-1.22.0-97-gc752ad5-5.2.0.tar.gz"
-IDF_TOOLCHAIN_LINUX32="https://dl.espressif.com/dl/xtensa-esp32-elf-linux32-1.22.0-97-gc752ad5-5.2.0.tar.gz"
-IDF_TOOLCHAIN_LINUX64="https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-97-gc752ad5-5.2.0.tar.gz"
-IDF_TOOLCHAIN_WIN32="https://dl.espressif.com/dl/xtensa-esp32-elf-win32-1.22.0-97-gc752ad5-5.2.0.zip"
-IDF_TOOLCHAIN_MACOS="https://dl.espressif.com/dl/xtensa-esp32-elf-macos-1.22.0-97-gc752ad5-5.2.0.tar.gz "
 
 if [ -z $IDF_BRANCH ]; then
-	IDF_BRANCH="release/v3.3"
+	IDF_BRANCH="master"
 fi
+
+if [ -z $AR_PR_TARGET_BRANCH ]; then
+	AR_PR_TARGET_BRANCH="master"
+fi
+
+if [ -z $IDF_TARGET ]; then
+	if [ -f sdkconfig ]; then
+		IDF_TARGET=`cat sdkconfig | grep CONFIG_IDF_TARGET= | cut -d'"' -f2`
+		if [ "$IDF_TARGET" = "" ]; then
+			IDF_TARGET="esp32"
+		fi
+	else
+		IDF_TARGET="esp32"
+	fi
+fi
+
+IDF_TOOLCHAIN="xtensa-$IDF_TARGET-elf"
 
 # Owner of the target ESP32 Arduino repository
 AR_USER="espressif"
@@ -18,11 +29,7 @@ AR_USER="espressif"
 # The full name of the repository
 AR_REPO="$AR_USER/arduino-esp32"
 
-IDF_REPO_URL="https://github.com/Jason2866/esp-idf.git"
-CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
-FACE_REPO_URL="https://github.com/espressif/esp-face.git"
 AR_REPO_URL="https://github.com/$AR_REPO.git"
-
 if [ -n $GITHUB_TOKEN ]; then
 	AR_REPO_URL="https://$GITHUB_TOKEN@github.com/$AR_REPO.git"
 fi
@@ -32,10 +39,9 @@ AR_COMPS="$AR_ROOT/components"
 AR_OUT="$AR_ROOT/out"
 AR_TOOLS="$AR_OUT/tools"
 AR_PLATFORM_TXT="$AR_OUT/platform.txt"
-AR_PLATFORMIO_PY="$AR_TOOLS/platformio-build.py"
 AR_ESPTOOL_PY="$AR_TOOLS/esptool.py"
 AR_GEN_PART_PY="$AR_TOOLS/gen_esp32part.py"
-AR_SDK="$AR_TOOLS/sdk"
+AR_SDK="$AR_TOOLS/sdk/$IDF_TARGET"
 
 function get_os(){
   	OSBITS=`arch`
@@ -93,13 +99,14 @@ function git_pr_exists(){ # git_pr_exists <branch-name>
 function git_create_pr(){ # git_create_pr <branch> <title>
 	local pr_branch="$1"
 	local pr_title="$2"
+	local pr_target="$3"
 	local pr_body=""
 	for component in `ls "$AR_COMPS"`; do
 		if [ ! $component == "arduino" ] && [ -d "$AR_COMPS/$component/.git" ]; then
 			pr_body+="$component: "$(git -C "$AR_COMPS/$component" symbolic-ref --short HEAD)" "$(git -C "$AR_COMPS/$component" rev-parse --short HEAD)"\r\n"
 		fi
 	done
-	local pr_data="{\"title\": \"$pr_title\", \"body\": \"$pr_body\", \"head\": \"$AR_USER:$pr_branch\", \"base\": \"master\"}"
+	local pr_data="{\"title\": \"$pr_title\", \"body\": \"$pr_body\", \"head\": \"$AR_USER:$pr_branch\", \"base\": \"$pr_target\"}"
 	git_create_pr_res=`echo "$pr_data" | curl -k -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3.raw+json" --data @- "https://api.github.com/repos/$AR_REPO/pulls"`
 	local done_pr=`echo "$git_create_pr_res" | jq -r '.title'`
 	if [ ! "$done_pr" == "" ] && [ ! "$done_pr" == "null" ]; then echo 1; else echo 0; fi
