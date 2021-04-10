@@ -3,7 +3,7 @@ name: ESP32 Arduino Libs CI
 on:
   push:
     branches:
-    - master-off
+    - master
   pull_request:
 
 jobs:
