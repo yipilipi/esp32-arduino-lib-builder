@@ -9,17 +9,11 @@ build_archive_path="dist/arduino-esp32-build-$idf_version_string.tar.gz"
 pio_archive_path="dist/framework-arduinoespressif32-$idf_version_string.tar.gz"
 
 mkdir -p dist && rm -rf "$archive_path" "$build_archive_path"
-#if [ -d "out" ]; then
-#cd out && tar zcf "../$archive_path" * && cd ..
-#fi
-#if [ -d "build" ]; then
-#cd build && tar zcf "../$build_archive_path" * && cd ..
-#fi
 
 if [ -d "out" ]; then
     cd out
-    echo "Show files folder: esp32-arduino-lib-builder/components/arduino/tools/sdk"
-    ls -R /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk
+    #echo "Show files folder: esp32-arduino-lib-builder/components/arduino/tools/sdk"
+    #ls -R /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk
     echo "Creating framework-arduinoespressif32"
     git clone https://github.com/espressif/arduino-esp32
     rm -rf arduino-esp32/tools/sdk
