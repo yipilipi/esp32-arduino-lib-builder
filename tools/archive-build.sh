@@ -18,6 +18,8 @@ mkdir -p dist && rm -rf "$archive_path" "$build_archive_path"
 
 if [ -d "out" ]; then
     cd out
+    echo "Show files folder: arduino-esp32"
+    ls -R arduino-esp32
     echo "Creating framework-arduinoespressif32"
     git clone https://github.com/espressif/arduino-esp32
     #rm -rf arduino-esp32/tools/sdk
