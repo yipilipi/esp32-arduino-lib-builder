@@ -3,7 +3,7 @@ name: ESP32 Arduino
 on:
   push:
     branches:
-    - master
+    - esp32c3
   pull_request:
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
         rm -rf esp32-arduino
         git rm -r --cached .
         git add -f *.*
-        git commit -m "esp32-arduino lib v4.4"
+        git commit -m "esp32-arduino c3"
     - name: Push changes  # push the files to branch framework-arduinoespressif32
       uses: ad-m/github-push-action@master
       with:
