@@ -65,7 +65,7 @@ for item in "${@:2:${#@}-5}"; do
 			item=`get_actual_path $item`
 			INCLUDES+="$item "
 		elif [ "${item:0:2}" = ".." ]; then
-			if [[ "${item:0:14}" = "../components/" && "${item:0:22}" != "../components/arduino/" ]]; then
+			if [[ "${item:0:14}" = "../components/" && "${item:0:22}" != "../components/arduino/" ]] || [[ "${item:0:11}" = "../esp-idf/" ]]; then
 				item="$PWD${item:2}"
 				item=`get_actual_path $item`
 				INCLUDES+="$item "
@@ -133,7 +133,21 @@ done
 add_next=0
 is_dir=0
 is_script=0
-str=`cat build/CMakeFiles/arduino-lib-builder.elf.dir/link.txt`
+if [ -f "build/CMakeFiles/arduino-lib-builder.elf.dir/link.txt" ]; then
+	str=`cat build/CMakeFiles/arduino-lib-builder.elf.dir/link.txt`
+else
+	libs=`cat build/build.ninja | grep LINK_LIBRARIES`
+	libs="${libs:19:${#libs}-1}"
+	flags=`cat build/build.ninja | grep LINK_FLAGS`
+	flags="${flags:15:${#flags}-1}"
+	if [ "$IDF_TARGET" = "esp32" ]; then
+		flags="-Wno-frame-address $flags"
+	fi
+	if [ "$IDF_TARGET" != "esp32c3" ]; then
+		flags="-mlongcalls $flags"
+	fi
+	str="$flags $libs"
+fi
 set -- $str
 for item; do
 	prefix="${item:0:1}"
@@ -231,7 +245,9 @@ echo "    CFLAGS=[" >> "$AR_PLATFORMIO_PY"
 set -- $PIO_C_FLAGS
 last_item="${@: -1}"
 for item in "${@:0:${#@}}"; do
-	echo "        \"$item\"," >> "$AR_PLATFORMIO_PY"
+	if [ "${item:0:1}" != "/" ]; then
+		echo "        \"$item\"," >> "$AR_PLATFORMIO_PY"
+	fi
 done
 echo "        \"$last_item\"" >> "$AR_PLATFORMIO_PY"
 echo "    ]," >> "$AR_PLATFORMIO_PY"
@@ -241,7 +257,9 @@ echo "    CXXFLAGS=[" >> "$AR_PLATFORMIO_PY"
 set -- $PIO_CXX_FLAGS
 last_item="${@: -1}"
 for item in "${@:0:${#@}}"; do
-	echo "        \"$item\"," >> "$AR_PLATFORMIO_PY"
+	if [ "${item:0:1}" != "/" ]; then
+		echo "        \"$item\"," >> "$AR_PLATFORMIO_PY"
+	fi
 done
 echo "        \"$last_item\"" >> "$AR_PLATFORMIO_PY"
 echo "    ]," >> "$AR_PLATFORMIO_PY"
