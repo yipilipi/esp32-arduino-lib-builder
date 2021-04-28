@@ -16,9 +16,16 @@ if [ -d "out" ]; then
     ls -R /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk/esp32/include/config
     echo "Creating framework-arduinoespressif32"
     git clone https://github.com/espressif/arduino-esp32
-    rm -rf arduino-esp32/tools/sdk
-    rm -rf arduino-esp32/docs
-    cp -Rf /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk arduino-esp32/tools/sdk
+    #rm -rf arduino-esp32/tools/sdk
+    #rm -rf arduino-esp32/docs
+    rm -rf $ESP32_ARDUINO/docs
+    rm -rf $ESP32_ARDUINO/tools/sdk $ESP32_ARDUINO/tools/esptool.py $ESP32_ARDUINO/tools/gen_esp32part.py $ESP32_ARDUINO/tools/platformio-build-*.py $ESP32_ARDUINO/platform.txt
+    cp -f $AR_OUT/platform.txt $ESP32_ARDUINO/
+    cp -Rf $AR_TOOLS/sdk $ESP32_ARDUINO/tools/
+    cp -f $AR_TOOLS/esptool.py $ESP32_ARDUINO/tools/
+    cp -f $AR_TOOLS/gen_esp32part.py $ESP32_ARDUINO/tools/
+    cp -f $AR_TOOLS/platformio-build-*.py $ESP32_ARDUINO/tools/
+    #cp -Rf /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk arduino-esp32/tools/sdk
     #cp -Rf tools/sdk arduino-esp32/tools/sdk
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
     mv arduino-esp32/ framework-arduinoespressif32/
