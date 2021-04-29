@@ -1,38 +1,12 @@
-name: ESP32 Arduino github releaser
+name: ESP32 Arduino
 
 on:
   push:
     branches:
-    - master
-  pull_request:
+    - relaser
 
 jobs:
-  create-prelease:
-    name: Create Pre-release
-    runs-on: windows-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v1
-      - name: create release
-        id: create_release 
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: true
-      - name: Output Release URL File
-        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
-      - name: Save Release URL File for publish
-        uses: actions/upload-artifact@v1
-        with:
-          name: release_url
-          path: release_url.txt
-
   build-libs:
-    needs: [create-prelease]
     name: Build Arduino Libs
     runs-on: ubuntu-latest
     steps:
@@ -41,39 +15,24 @@ jobs:
       run: bash ./tools/prepare-ci.sh
     - name: Build Arduino Libs
       run: bash ./build.sh
-    - name: Upload archive
+    - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
         name: esp32-arduino
         path: dist
-    - name: Load Release URL File from release job
-      uses: actions/download-artifact@v1
+    - name: Download new builded framework
+      uses: actions/download-artifact@v2
       with:
-       name: release_url
-    - name: Get Pre-release File Name & Upload URL
-      id: get_release_info
-      shell: bash
-      run: |
-          value=`cat release_url/release_url.txt`
-          echo ::set-output name=upload_url::$value
-    - name: Debug
-      shell: bash
-      run: |
-          echo `ls -la dist/`
-          cd dist
-          echo `ls framew*`
-          echo `ls framew*` > frwkname.txt
-          FRWK=`cat frwkname.txt`
-          echo $FRWK
-          echo "frwk_name=$FRWK" >> $GITHUB_ENV #https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#environment-files
-          cd ..
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1.0.1
+        name: esp32-arduino
+        path: ./esp32-arduino
+        working-directory: ./esp32-arduino
+    - name: Display files from folder esp32-arduino 
+      run: ls esp32-arduino/*
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      #if: startsWith(github.ref, 'refs/tags/')
+      with:
+        tag_name: ${{ github.run_number }}
+        files: esp32-arduino/framework*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.get_release_info.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: dist/${{ env.frwk_name }}
-        asset_name: ${{ env.frwk_name }}
-        asset_content_type: application/octet-stream
