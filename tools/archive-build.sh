@@ -12,8 +12,8 @@ mkdir -p dist && rm -rf "$archive_path" "$build_archive_path"
 
 if [ -d "out" ]; then
     cd out
-    echo "Show files folder: esp32-arduino-lib-builder/components/arduino/tools/sdk.../config"
-    ls -R /home/runner/work/esp32-arduino-lib-builder/esp32-arduino-lib-builder/components/arduino/tools/sdk/esp32/include/config
+    echo "Show files from folder out"
+    ls
     echo "Creating framework-arduinoespressif32"
     git clone https://github.com/espressif/arduino-esp32
     rm -rf arduino-esp32/docs
