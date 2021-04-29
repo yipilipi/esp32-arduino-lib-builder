@@ -33,6 +33,7 @@ jobs:
       #if: startsWith(github.ref, 'refs/tags/')
       with:
         tag_name: ${{ github.run_number }}
+        prerelease: 1
         files: esp32-arduino/framework*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
