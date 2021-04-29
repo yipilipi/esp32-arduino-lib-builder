@@ -25,7 +25,6 @@ jobs:
       with:
         name: esp32-arduino
         path: ./esp32-arduino
-        working-directory: ./esp32-arduino
     - name: Display files from folder esp32-arduino 
       run: ls esp32-arduino/*
     - name: Release
