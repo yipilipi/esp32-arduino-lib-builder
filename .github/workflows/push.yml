@@ -3,7 +3,7 @@ name: ESP32 Arduino
 on:
   push:
     branches:
-    - relaser
+    - master
 
 jobs:
   build-libs:
