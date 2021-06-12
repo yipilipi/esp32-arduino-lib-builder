@@ -37,9 +37,9 @@ if [ -d "out" ]; then
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
     echo "add LITTLEFS as library to framework"
     git clone https://github.com/Jason2866/LITTLEFS
-    ls *
+    ls LITTLEFS/*
     mkdir -p arduino-esp32/libraries/LITTLEFS
-    cp -Rf * arduino-esp32/libraries/LITTLEFS
+    cp -Rf LITTLEFS/* arduino-esp32/libraries/LITTLEFS
     mv arduino-esp32/ framework-arduinoespressif32/
     tar --exclude=.* -zcf ../$pio_archive_path framework-arduinoespressif32/
     cd ..
