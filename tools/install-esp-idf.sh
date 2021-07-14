@@ -14,7 +14,7 @@ fi
 IDF_REPO_URL="https://github.com/tasmota/esp-idf.git"
 #if [ -z "$IDF_PATH" ]; then
 	echo "ESP-IDF is not installed! Installing local copy"
-#	idf_was_installed="1"
+	idf_was_installed="1"
 #	if ! [ -d esp-idf ]; then
 		echo "git clone $IDF_REPO_URL -b $IDF_BRANCH"
 		git clone $IDF_REPO_URL -b $IDF_BRANCH
