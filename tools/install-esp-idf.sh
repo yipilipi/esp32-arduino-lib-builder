@@ -18,7 +18,7 @@ if [ -z "$IDF_PATH" ]; then
 	if ! [ -d esp-idf ]; then
 		echo "git clone $IDF_REPO_URL -b $IDF_BRANCH and git reset to sha1 252036567c7f07e6244ac82047df3cb589100349"
 		git clone $IDF_REPO_URL -b $IDF_BRANCH
-		git reset --hard 252036567c7f07e6244ac82047df3cb589100349
+		git reset --hard 2de9d40ddebc15a4584d59cc1ffdb7c943ba827a # dirty hack to use https://github.com/tasmota/esp-idf.git branch master @ sha1 2de9d40ddebc15a4584d59cc1ffdb7c943ba827a
 	fi
 	export IDF_PATH="$AR_ROOT/esp-idf"
 fi
