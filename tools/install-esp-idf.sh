@@ -11,22 +11,22 @@ fi
 # CLONE ESP-IDF
 #
 
-IDF_REPO_URL="https://github.com/espressif/esp-idf.git"
-if [ -z "$IDF_PATH" ]; then
+IDF_REPO_URL="https://github.com/tasmota/esp-idf.git"
+#if [ -z "$IDF_PATH" ]; then
 	echo "ESP-IDF is not installed! Installing local copy"
-	idf_was_installed="1"
-	if ! [ -d esp-idf ]; then
-		echo "git clone $IDF_REPO_URL -b $IDF_BRANCH and git reset to sha1 252036567c7f07e6244ac82047df3cb589100349"
+#	idf_was_installed="1"
+#	if ! [ -d esp-idf ]; then
+		echo "git clone $IDF_REPO_URL -b $IDF_BRANCH"
 		git clone $IDF_REPO_URL -b $IDF_BRANCH
-		git reset --hard 2de9d40ddebc15a4584d59cc1ffdb7c943ba827a # dirty hack to use https://github.com/tasmota/esp-idf.git branch master @ sha1 2de9d40ddebc15a4584d59cc1ffdb7c943ba827a
-	fi
+#	fi
 	export IDF_PATH="$AR_ROOT/esp-idf"
-fi
+#fi
 
-if [ "$IDF_COMMIT" ]; then
-    git -C "$IDF_PATH" checkout "$IDF_COMMIT"
-    commit_predefined="1"
-fi
+# Next lines redirects ALWAYS to espressif git since this sha1 only exists there!!! 
+#if [ "$IDF_COMMIT" ]; then
+#    git -C "$IDF_PATH" checkout "$IDF_COMMIT"
+#    commit_predefined="1"
+#fi
 
 export IDF_COMMIT=$(git -C "$IDF_PATH" rev-parse --short HEAD)
 export IDF_BRANCH=$(git -C "$IDF_PATH" symbolic-ref --short HEAD)
