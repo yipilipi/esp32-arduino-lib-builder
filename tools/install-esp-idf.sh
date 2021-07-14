@@ -16,7 +16,8 @@ if [ -z "$IDF_PATH" ]; then
 	echo "ESP-IDF is not installed! Installing local copy"
 	idf_was_installed="1"
 	if ! [ -d esp-idf ]; then
-		git clone $IDF_REPO_URL -b $IDF_BRANCH
+		#git clone $IDF_REPO_URL -b $IDF_BRANCH
+		git clone https://github.com/tasmota/esp-idf.git -b master
 	fi
 	export IDF_PATH="$AR_ROOT/esp-idf"
 fi
