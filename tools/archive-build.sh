@@ -35,11 +35,11 @@ if [ -d "out" ]; then
     cp -Rf tools/platformio-build.py arduino-esp32/tools/platformio-build.py
     cp -Rf platform.txt arduino-esp32/platform.txt
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
-    echo "add LITTLEFS as library to framework"
-    git clone https://github.com/Jason2866/LITTLEFS
-    ls LITTLEFS/*
-    mkdir -p arduino-esp32/libraries/LITTLEFS
-    cp -Rf LITTLEFS/* arduino-esp32/libraries/LITTLEFS
+    echo "add LittleFS as library to framework"
+    git clone https://github.com/Jason2866/LittleFS
+    ls LittleFS/*
+    mkdir -p arduino-esp32/libraries/LittleFS
+    cp -Rf LittleFS/* arduino-esp32/libraries/LittleFS
     mv arduino-esp32/ framework-arduinoespressif32/
     tar --exclude=.* -zcf ../$pio_archive_path framework-arduinoespressif32/
     cd ..
