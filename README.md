@@ -1,4 +1,4 @@
-# ESP32 Arduino Lib Builder [![Build Status](https://travis-ci.org/espressif/esp32-arduino-lib-builder.svg?branch=master)](https://travis-ci.org/espressif/esp32-arduino-lib-builder)
+# Tasmota ESP32 Arduino Lib Builder [![Build Status](https://travis-ci.org/espressif/esp32-arduino-lib-builder.svg?branch=master)](https://travis-ci.org/espressif/esp32-arduino-lib-builder)
 
 This repository contains the scripts that produce the libraries included with esp32-arduino.
 
@@ -12,4 +12,3 @@ git clone https://github.com/espressif/esp32-arduino-lib-builder
 cd esp32-arduino-lib-builder
 ./build.sh
 ```
-
