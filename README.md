@@ -1,4 +1,4 @@
-# Tasmota ESP32 Arduino Lib Builder
+# Tasmota ESP32-solo1 Arduino Lib Builder
 
 This repository contains the scripts that produce the adopted libraries for Tasmota Arduino Esp32.
 
