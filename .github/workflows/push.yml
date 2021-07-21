@@ -1,9 +1,9 @@
-name: ESP32 Arduino
+name: ESP32 Arduino Solo1
 
 on:
   push:
     branches:
-    - master
+    - main/solo1
 
 jobs:
   build-libs:
