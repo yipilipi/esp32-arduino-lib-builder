@@ -112,7 +112,9 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 if [ ! -d "$AR_COMPS/arduino_tinyusb/tinyusb" ]; then
 	git clone $TINYUSB_REPO_URL "$AR_COMPS/arduino_tinyusb/tinyusb"
-	git -C "$AR_COMPS/arduino_tinyusb/tinyusb" checkout 832d22d7addf9b1e4b88556c544f60bd9fa32dd6
+else
+	git -C "$AR_COMPS/arduino_tinyusb/tinyusb" fetch && \
+	git -C "$AR_COMPS/arduino_tinyusb/tinyusb" pull --ff-only
 fi
 if [ $? -ne 0 ]; then exit 1; fi
 
