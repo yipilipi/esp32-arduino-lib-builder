@@ -36,7 +36,7 @@ if [ -d "out" ]; then
     cp -Rf platform.txt arduino-esp32/platform.txt
     cp ../core_version.h arduino-esp32/cores/esp32/core_version.h
     echo "add LittleFS as library to framework"
-    git clone https://github.com/Jason2866/LittleFS
+    git clone https://github.com/tasmota/LittleFS
     ls LittleFS/*
     mkdir -p arduino-esp32/libraries/LittleFS
     cp -Rf LittleFS/* arduino-esp32/libraries/LittleFS
