@@ -2,7 +2,6 @@
 
 IDF_COMPS="$IDF_PATH/components"
 
-echo $IDF_BRANCH
 if [ -z $IDF_BRANCH ]; then
 	IDF_BRANCH="master"
 fi
