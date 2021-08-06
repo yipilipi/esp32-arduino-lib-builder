@@ -2,7 +2,7 @@
 
 This repository contains the scripts that produce the adopted libraries for Tasmota Arduino Esp32.
 
-Tested on Ubuntu. 
+Tested on Ubuntu.  
 
 ### Build on Ubuntu
 ```bash
