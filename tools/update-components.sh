@@ -6,6 +6,7 @@ source ./tools/config.sh
 # CLONE/UPDATE ARDUINO
 #
 if [ ! -d "$AR_COMPS/arduino" ]; then
+        echo "git clone $AR_REPO_URL $AR_COMPS/arduino"
 	git clone $AR_REPO_URL "$AR_COMPS/arduino"
 fi
 if [ -z $ARDUINO_BRANCH ]; then
@@ -16,8 +17,10 @@ if [ -z $ARDUINO_BRANCH ]; then
 		has_ar_branch=`git_branch_exists "$AR_COMPS/arduino" "$AR_PR_TARGET_BRANCH"`
 		if [ "$has_ar_branch" == "1" ]; then
 			ARDUINO_BRANCH="$AR_PR_TARGET_BRANCH"
+                        echo "$ARDUINO_BRANCH"
 		else
 			ARDUINO_BRANCH="master"
+                        echo "$ARDUINO_BRANCH"
 		fi
 	fi
 fi
@@ -25,9 +28,11 @@ fi
 git -C "$AR_COMPS/arduino" checkout $ARDUINO_BRANCH && \
 git -C "$AR_COMPS/arduino" fetch origin && \
 git -C "$AR_COMPS/arduino" pull origin $ARDUINO_BRANCH
+echo "checkout and pull origin $ARDUINO_BRANCH"
 
 if [ $? -ne 0 ]; then exit 1; fi
 git -C "$AR_COMPS/arduino" submodule update --init --recursive
+echo "git -C "$AR_COMPS/arduino" submodule update --init --recursive"
 
 #
 # CLONE/UPDATE ESP32-CAMERA
