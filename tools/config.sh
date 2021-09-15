@@ -24,7 +24,8 @@ AR_REPO="$AR_USER/arduino-esp32"
 
 IDF_REPO_URL="https://github.com/tasmota/esp-idf.git"
 CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
-FACE_REPO_URL="https://github.com/espressif/esp-face.git"
+FACE_REPO_URL="https://github.com/espressif/esp-dl.git"
+FACE_BRANCH="release/v1.0"
 AR_REPO_URL="https://github.com/$AR_REPO.git"
 
 if [ -n $GITHUB_TOKEN ]; then
