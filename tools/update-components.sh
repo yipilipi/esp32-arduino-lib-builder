@@ -52,6 +52,7 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 #if [ ! -d "$AR_COMPS/esp-face" ]; then
 	git clone $FACE_REPO_URL "$AR_COMPS/esp-face"
+        cd "$AR_COMPS/esp-face"
         git checkout $FACE_BRANCH
         echo "git clone $FACE_REPO_URL $FACE_BRANCH "$AR_COMPS/esp-face""
 # Source is now https://github.com/espressif/esp-dl/tree/release/v1.0
