@@ -51,8 +51,8 @@ if [ $? -ne 0 ]; then exit 1; fi
 #
 
 #if [ ! -d "$AR_COMPS/esp-face" ]; then
-	git clone --recursive $FACE_REPO_URL "$AR_COMPS/esp-dl" -b "release/v.1.0"
-        echo "git clone --recursive $FACE_REPO_URL "$AR_COMPS/esp-dl" -b "release/v.1.0""
+	git clone --recursive $FACE_REPO_URL -b "release/v.1.0" "$AR_COMPS/esp-face"
+        echo "git clone --recursive $FACE_REPO_URL -b "release/v.1.0" "$AR_COMPS/esp-face""
 # Source is now https://github.com/espressif/esp-dl/tree/release/v1.0
 #else
 #       git -C "$AR_COMPS/esp-face" fetch origin && \
