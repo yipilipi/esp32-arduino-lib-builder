@@ -50,10 +50,14 @@ if [ $? -ne 0 ]; then exit 1; fi
 # CLONE/UPDATE ESP-FACE
 #
 
-if [ ! -d "$AR_COMPS/esp-face" ]; then
+#if [ ! -d "$AR_COMPS/esp-face" ]; then
 	git clone $FACE_REPO_URL "$AR_COMPS/esp-face"
-else
-	git -C "$AR_COMPS/esp-face" fetch origin && \
-	git -C "$AR_COMPS/esp-face" pull origin master
-fi
+        cd "$AR_COMPS/esp-face"
+        git checkout $FACE_BRANCH
+        echo "git clone $FACE_REPO_URL $FACE_BRANCH "$AR_COMPS/esp-face""
+# Source is now https://github.com/espressif/esp-dl/tree/release/v1.0
+#else
+#       git -C "$AR_COMPS/esp-face" fetch origin && \
+#       git -C "$AR_COMPS/esp-face" pull origin master
+#fi
 if [ $? -ne 0 ]; then exit 1; fi
