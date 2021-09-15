@@ -57,5 +57,5 @@ if [ $? -ne 0 ]; then exit 1; fi
 #else
 #       git -C "$AR_COMPS/esp-face" fetch origin && \
 #       git -C "$AR_COMPS/esp-face" pull origin master
-fi
+#fi
 if [ $? -ne 0 ]; then exit 1; fi
