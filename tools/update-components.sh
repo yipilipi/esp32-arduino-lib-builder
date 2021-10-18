@@ -3,7 +3,7 @@
 source ./tools/config.sh
 
 CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
-FACE_REPO_URL="https://github.com/espressif/esp-face.git"
+FACE_REPO_URL="https://github.com/espressif/esp-dl.git"
 RMAKER_REPO_URL="https://github.com/espressif/esp-rainmaker.git"
 DSP_REPO_URL="https://github.com/espressif/esp-dsp.git"
 LITTLEFS_REPO_URL="https://github.com/joltwallet/esp_littlefs.git"
@@ -56,10 +56,10 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 if [ ! -d "$AR_COMPS/esp-face" ]; then
 	git clone $FACE_REPO_URL "$AR_COMPS/esp-face"
-	cml=`cat "$AR_COMPS/esp-face/CMakeLists.txt"`
-	echo "if(IDF_TARGET STREQUAL \"esp32\" OR IDF_TARGET STREQUAL \"esp32s2\" OR IDF_TARGET STREQUAL \"esp32s3\")" > "$AR_COMPS/esp-face/CMakeLists.txt"
-	echo "$cml" >> "$AR_COMPS/esp-face/CMakeLists.txt"
-	echo "endif()" >> "$AR_COMPS/esp-face/CMakeLists.txt"
+	# cml=`cat "$AR_COMPS/esp-face/CMakeLists.txt"`
+	# echo "if(IDF_TARGET STREQUAL \"esp32\" OR IDF_TARGET STREQUAL \"esp32s2\" OR IDF_TARGET STREQUAL \"esp32s3\")" > "$AR_COMPS/esp-face/CMakeLists.txt"
+	# echo "$cml" >> "$AR_COMPS/esp-face/CMakeLists.txt"
+	# echo "endif()" >> "$AR_COMPS/esp-face/CMakeLists.txt"
 else
 	git -C "$AR_COMPS/esp-face" fetch && \
 	git -C "$AR_COMPS/esp-face" pull --ff-only
@@ -73,10 +73,12 @@ if [ $? -ne 0 ]; then exit 1; fi
 if [ ! -d "$AR_COMPS/esp_littlefs" ]; then
 	git clone $LITTLEFS_REPO_URL "$AR_COMPS/esp_littlefs" && \
     git -C "$AR_COMPS/esp_littlefs" submodule update --init --recursive
+    git -C "$AR_COMPS/esp_littlefs" checkout 819de4e33433d06c479627ee678ed5d81c2978c6
 else
 	git -C "$AR_COMPS/esp_littlefs" fetch && \
 	git -C "$AR_COMPS/esp_littlefs" pull --ff-only && \
     git -C "$AR_COMPS/esp_littlefs" submodule update --init --recursive
+    git -C "$AR_COMPS/esp_littlefs" checkout 819de4e33433d06c479627ee678ed5d81c2978c6
 fi
 if [ $? -ne 0 ]; then exit 1; fi
 
