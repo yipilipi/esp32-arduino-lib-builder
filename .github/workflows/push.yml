@@ -1,6 +1,7 @@
 name: ESP32 Arduino IDF 3.3.5 for Tasmota
 
 on:
+  workflow_dispatch:  # Manually start a workflow
   push:
     branches:
     - tasmota/v3.3
