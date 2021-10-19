@@ -1,6 +1,7 @@
 name: TASMOTA ESP32 Arduino Solo1
 
 on:
+  workflow_dispatch:  # Manually start a workflow
   push:
     branches:
     - tasmota/v3.3-solo1
