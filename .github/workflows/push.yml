@@ -1,6 +1,7 @@
 name: ESP32 Arduino Solo1
 
 on:
+  workflow_dispatch:  # Manually start a workflow
   push:
     branches:
     - main/solo1
