@@ -40,11 +40,9 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 if [ ! -d "$AR_COMPS/esp32-camera" ]; then
 	git clone $CAMERA_REPO_URL "$AR_COMPS/esp32-camera"
-	git -C "$AR_COMPS/esp32-camera" checkout 722497cb19383cd4ee6b5d57bb73148b5af41b24
 else
 	git -C "$AR_COMPS/esp32-camera" fetch && \
 	git -C "$AR_COMPS/esp32-camera" pull --ff-only
-	git -C "$AR_COMPS/esp32-camera" checkout 722497cb19383cd4ee6b5d57bb73148b5af41b24
 fi
 #this is a temp measure to fix build issue in recent IDF master
 if [ -f "$AR_COMPS/esp32-camera/idf_component.yml" ]; then
