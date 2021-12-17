@@ -2,7 +2,7 @@
 
 source ./tools/config.sh
 
-#CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
+CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
 #FACE_REPO_URL="https://github.com/espressif/esp-dl.git"
 RMAKER_REPO_URL="https://github.com/espressif/esp-rainmaker.git"
 DSP_REPO_URL="https://github.com/espressif/esp-dsp.git"
@@ -31,6 +31,22 @@ fi
 
 if [ "$AR_BRANCH" ]; then
 	git -C "$AR_COMPS/arduino" checkout "$AR_BRANCH"
+fi
+if [ $? -ne 0 ]; then exit 1; fi
+
+#
+# CLONE/UPDATE ESP32-CAMERA
+#
+
+if [ ! -d "$AR_COMPS/esp32-camera" ]; then
+	git clone $CAMERA_REPO_URL "$AR_COMPS/esp32-camera"
+else
+	git -C "$AR_COMPS/esp32-camera" fetch && \
+	git -C "$AR_COMPS/esp32-camera" pull --ff-only
+fi
+#this is a temp measure to fix build issue in recent IDF master
+if [ -f "$AR_COMPS/esp32-camera/idf_component.yml" ]; then
+	rm -rf "$AR_COMPS/esp32-camera/idf_component.yml"
 fi
 if [ $? -ne 0 ]; then exit 1; fi
 
