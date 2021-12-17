@@ -35,38 +35,6 @@ fi
 if [ $? -ne 0 ]; then exit 1; fi
 
 #
-# CLONE/UPDATE ESP32-CAMERA
-#
-
-if [ ! -d "$AR_COMPS/esp32-camera" ]; then
-	git clone $CAMERA_REPO_URL "$AR_COMPS/esp32-camera"
-else
-	git -C "$AR_COMPS/esp32-camera" fetch && \
-	git -C "$AR_COMPS/esp32-camera" pull --ff-only
-fi
-#this is a temp measure to fix build issue in recent IDF master
-if [ -f "$AR_COMPS/esp32-camera/idf_component.yml" ]; then
-	rm -rf "$AR_COMPS/esp32-camera/idf_component.yml"
-fi
-if [ $? -ne 0 ]; then exit 1; fi
-
-#
-# CLONE/UPDATE ESP-FACE
-#
-
-if [ ! -d "$AR_COMPS/esp-face" ]; then
-	git clone --recursive $FACE_REPO_URL "$AR_COMPS/esp-face"
-	# cml=`cat "$AR_COMPS/esp-face/CMakeLists.txt"`
-	# echo "if(IDF_TARGET STREQUAL \"esp32\" OR IDF_TARGET STREQUAL \"esp32s2\" OR IDF_TARGET STREQUAL \"esp32s3\")" > "$AR_COMPS/esp-face/CMakeLists.txt"
-	# echo "$cml" >> "$AR_COMPS/esp-face/CMakeLists.txt"
-	# echo "endif()" >> "$AR_COMPS/esp-face/CMakeLists.txt"
-else
-	git -C "$AR_COMPS/esp-face" fetch && \
-	git -C "$AR_COMPS/esp-face" pull --ff-only
-fi
-if [ $? -ne 0 ]; then exit 1; fi
-
-#
 # CLONE/UPDATE ESP-LITTLEFS
 #
 
