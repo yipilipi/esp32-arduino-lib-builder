@@ -16,6 +16,7 @@ if [ -d "out" ]; then
     ls
     echo "Creating framework-arduinoespressif32"
     git clone https://github.com/tasmota/arduino-esp32
+    rm -rf arduino-esp32/libraries/RainMaker
     rm -rf arduino-esp32/docs
     rm -rf arduino-esp32/package
     rm -rf arduino-esp32/tools/sdk
