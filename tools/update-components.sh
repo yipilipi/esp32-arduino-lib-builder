@@ -3,7 +3,7 @@
 source ./tools/config.sh
 
 CAMERA_REPO_URL="https://github.com/espressif/esp32-camera.git"
-#FACE_REPO_URL="https://github.com/espressif/esp-dl.git"
+FACE_REPO_URL="https://github.com/espressif/esp-dl.git"
 #RMAKER_REPO_URL="https://github.com/espressif/esp-rainmaker.git"
 DSP_REPO_URL="https://github.com/espressif/esp-dsp.git"
 LITTLEFS_REPO_URL="https://github.com/joltwallet/esp_littlefs.git"
@@ -47,6 +47,22 @@ fi
 #this is a temp measure to fix build issue in recent IDF master
 if [ -f "$AR_COMPS/esp32-camera/idf_component.yml" ]; then
 	rm -rf "$AR_COMPS/esp32-camera/idf_component.yml"
+fi
+if [ $? -ne 0 ]; then exit 1; fi
+
+#
+# CLONE/UPDATE ESP-FACE
+#
+
+if [ ! -d "$AR_COMPS/esp-face" ]; then
+	git clone $FACE_REPO_URL "$AR_COMPS/esp-face"
+	# cml=`cat "$AR_COMPS/esp-face/CMakeLists.txt"`
+	# echo "if(IDF_TARGET STREQUAL \"esp32\" OR IDF_TARGET STREQUAL \"esp32s2\" OR IDF_TARGET STREQUAL \"esp32s3\")" > "$AR_COMPS/esp-face/CMakeLists.txt"
+	# echo "$cml" >> "$AR_COMPS/esp-face/CMakeLists.txt"
+	# echo "endif()" >> "$AR_COMPS/esp-face/CMakeLists.txt"
+else
+	git -C "$AR_COMPS/esp-face" fetch && \
+	git -C "$AR_COMPS/esp-face" pull --ff-only
 fi
 if [ $? -ne 0 ]; then exit 1; fi
 
